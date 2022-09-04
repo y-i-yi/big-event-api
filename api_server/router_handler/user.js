@@ -13,7 +13,7 @@ exports.reguser = (req,res) => {
   //  console.log(userInfo)
   // 判断用户是否提交username password
   if (!userInfo.username || !userInfo.password ) {
-    return res.send({ status: 1, message: '用户名或密码不能为空！'})
+    return res.send({ status: 1, message: '用户名或密码不能为空!' })
   }
 
   // 定义查询用户名是否存在语句
@@ -22,11 +22,11 @@ exports.reguser = (req,res) => {
   db.query(sqlstr, [userInfo.username], (err,results) => {
     if (err) {
       // 执行sql语句失败
-      return res.send({ status: 1, message: err.message})
+      return res.cc(err)
     }
     if (results.length >0){
       // 用户名已被占用
-      return res.send({ status: 1, message: '用户名被占用'})
+      return res.cc('用户名被占用')
     }
     // 用户名可以使用
     // 调用bcrypt.hashSync(明文密码, 随机盐的长度)对密码进行加密
@@ -34,20 +34,19 @@ exports.reguser = (req,res) => {
 
   //  定义插入新用户的sql语句
    const sql = `insert into ev_users set ?`
-   db.query(sql, {username: userInfo.username,password: userInfo.password}, (err,results) => {
+   db.query(sql, { username: userInfo.username,password: userInfo.password }, (err,results) => {
     if (err) {
       // 执行sql语句失败
-      return res.send({ sataus: 1, message: err.message})
+      return res.cc(err)
     }
     // SQL 语句执行成功，但影响行数不为 1
     if (results.affectedRows !== 1) {
-      return res.send({ sataus: 1, message: '注册用户失败，请稍后再试'})
+      return res.cc('注册用户失败，请稍后再试')
     }
     // 注册用户成功
-    res.send({ sataus: 0, message: '注册用户成功！'})
+    res.cc('注册用户成功！',0)
    })
 })
-  // res.send('reguser ok!')
 }
 
 exports.login = (req,res) => {
