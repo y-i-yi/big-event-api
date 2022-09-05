@@ -3,18 +3,19 @@
 // 导入MySQL模块
 const db = require('../db/index.js')
 
-// 导入bcryptjs
+// 导入bcryptjs，对密码进行加密存储
 const bcrypt = require('bcryptjs')
+
 
 // 注册
 exports.reguser = (req,res) => {
   const userInfo = req.body
   // 对表单数据进行合法性校验
   //  console.log(userInfo)
-  // 判断用户是否提交username password
-  if (!userInfo.username || !userInfo.password ) {
-    return res.send({ status: 1, message: '用户名或密码不能为空!' })
-  }
+  // // 判断用户是否提交username password
+  // if (!userInfo.username || !userInfo.password ) {
+  //   return res.send({ status: 1, message: '用户名或密码不能为空!' })
+  // }
 
   // 定义查询用户名是否存在语句
   const sqlstr = `select * from ev_users where username=?`
@@ -49,6 +50,7 @@ exports.reguser = (req,res) => {
 })
 }
 
+// 登录
 exports.login = (req,res) => {
   res.send('login ok!')
 }

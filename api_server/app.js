@@ -3,6 +3,8 @@ const express = require('express')
 // 创建express实例对象
 const app = express()
 
+const Joi = require('joi')
+
 // 导入并配置cors中间件
 const cors = require('cors')
 app.use(cors())
@@ -25,6 +27,14 @@ app.use((req, res, next) => {
 // 导入并使用路由模块
 const userRouter = require('./router/user')
 app.use('/api',userRouter)
+
+// 错误中间件
+app.use(function (err, req, res, next) {
+    // 数据验证失败
+    if (err instanceof Joi.ValidationError)  return res.cc(err)
+    // 未知错误
+    res.cc(err)
+  })
 
 
 // 启动服务器
