@@ -1,4 +1,4 @@
-// 导入express
+// 1.导入express
 const express = require('express')
 const app = express() // 创建express实例对象
 
@@ -31,10 +31,12 @@ const config = require('./config') // 导入配置文件
 // 使用 .unless({ path: [/^\/api\//] }) 指定哪些接口不需要进行 Token 的身份认证
 app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api\//] }))
 
-// 导入并使用路由模块
+// 2.导入并使用路由模块
 const userRouter = require('./router/user')
+const userinfoRouter = require('./router/userinfo.js')
 
 app.use('/api',userRouter)
+app.use('/my', userinfoRouter)
 
 // 错误中间件
 app.use(function (err, req, res, next) {
@@ -49,7 +51,7 @@ app.use(function (err, req, res, next) {
   })
 
 
-// 启动服务器
+// 3.启动服务器
 app.listen(3007,() => {
     console.log('服务器正在http://127.0.0.1:3007运行')
 })

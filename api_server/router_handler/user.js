@@ -67,7 +67,7 @@ exports.login = (req,res) => {
     if (err) return res.cc(err)
     if(results.length !== 1) return res.cc('登录失败')
 
-  //  console.log(results) 登录成功后的返回结果
+   // console.log(results) // 登录成功后的返回结果([RowDataPacket {id,username,password,nickname,email,user_pic}])
 
   // 3.判断该用户输入的密码是否正确
   // 调用 bcrypt.compareSync(用户提交的密码, 数据库中的密码) 方法比较密码，返回值是布尔值
