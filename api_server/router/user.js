@@ -11,11 +11,11 @@ const expressJoi = require('@escook/express-joi')
 //  导入需要的验证规则对象
 const { reg_log_schema } = require('../schema/user')
 
-// 注册新用户
+// 注册新用户,1.注册前通过中间件验证表单数据是否合法
 router.post('/reguser', expressJoi(reg_log_schema), routerHandler.reguser)
 
-// 登录新用户
-router.post('/login', routerHandler.login)
+// 登录新用户，1.登录前通过中间件验证表单数据是否合法
+router.post('/login', expressJoi(reg_log_schema), routerHandler.login)
 
 
 
