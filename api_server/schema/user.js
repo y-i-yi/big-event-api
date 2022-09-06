@@ -43,3 +43,12 @@ exports.update_password_schema = {
     newPwd: Joi.not(Joi.ref('oldPwd')).concat(password)
   }
 }
+
+// 用户更新头像的验证规则对象
+exports.update_avatar_schema = {
+  body: {
+    // dataUri() 指的是如下格式的字符串数据：
+    // data:image/png;base64,VE9PTUFOWVNFQ1JFVFM=
+    avatar: Joi.string().dataUri().required()
+  }
+}

@@ -66,3 +66,26 @@ exports.updatePassword = (req,res) => {
     })
   })
 }
+
+// 更新头像
+exports.updateAvatar = (req, res) => {
+  const sql = `select * from ev_users where id=?`
+  // 查询用户是否存在
+  db.query(sql, req.user.id, (err, results) => {
+    // 判断sql语句是否执行成功
+    if (err) return res.cc(err)
+    if (results.length !== 1) return res.cc('用户不存在')
+
+    const sqlstr = 'update ev_users set user_pic=? where id=?'
+    db.query(sqlstr, [req.body.avatar, req.user.id], (err, results) => {
+      // 执行 SQL 语句失败
+      if (err) return res.cc(err)
+    
+      // 执行 SQL 语句成功，但是影响行数不等于 1
+      if (results.affectedRows !== 1) return res.cc('更新头像失败！')
+    
+      // 更新用户头像成功
+      return res.cc('更新头像成功！', 0)
+    })
+  })
+}
