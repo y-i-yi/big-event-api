@@ -32,11 +32,14 @@ const config = require('./config') // 导入配置文件
 app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api\//] }))
 
 // 2.导入并使用路由模块
-const userRouter = require('./router/user')
-const userinfoRouter = require('./router/userinfo.js')
+const userRouter = require('./router/user') // 用户路由
+const userinfoRouter = require('./router/userinfo.js') // 用户信息路由
+const artcateRouter = require('./router/artcate') // 文章分类
 
 app.use('/api',userRouter)
 app.use('/my', userinfoRouter)
+app.use('/my/article',artcateRouter)
+
 
 // 错误中间件
 app.use(function (err, req, res, next) {
