@@ -20,3 +20,16 @@ exports.getUserInfo = (req, res) => {
     })
 })
 }
+
+// 更新用户基本数据
+exports.updateUserInfo = (req,res) => {
+
+  const sql = `update ev_users set ? where id=?`
+
+  db.query(sql, [req.body, req.body.id], (err,results) => {
+    // 判断sql语句是否执行成功
+    if (err) return res.cc(err)
+    if (results.affectedRows !== 1) return res.cc('修改用户信息失败！')
+    return res.cc('修改用户信息成功！', 0)
+  })
+}
