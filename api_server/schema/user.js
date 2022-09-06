@@ -32,3 +32,14 @@ exports.update_userinfo_schema = {
     email
   }
 }
+
+// 更新用户密码的验证对象
+exports.update_password_schema = {
+  body:{
+    oldPwd: password,
+    // joi.ref('oldPwd') 表示 newPwd 的值必须和 oldPwd 的值保持一致
+    // joi.not(joi.ref('oldPwd')) 表示 newPwd 的值不能等于 oldPwd 的值
+    // .concat() 用于合并 joi.not(joi.ref('oldPwd')) 和 password 这两条验证规则
+    newPwd: Joi.not(Joi.ref('oldPwd')).concat(password)
+  }
+}
