@@ -11,6 +11,10 @@ app.use(cors())
 // 配置解析application/x-www-form-urlencoded 格式的表单数据的中间件
 app.use(express.urlencoded({extended:false}))
 
+// 托管静态资源文件
+app.use('/uploads', express.static('./uploads'))
+
+
 // 在路由之前封装res.cc函数
 app.use((req, res, next) => {
     // status默认值为1，表示失败，err可能为错误对象也可能为描述错误的字符串
@@ -35,11 +39,13 @@ app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api\//] 
 const userRouter = require('./router/user') // 用户路由
 const userinfoRouter = require('./router/userinfo.js') // 用户信息路由
 const artcateRouter = require('./router/artcate') // 文章分类
+const articleRouter = require('./router/article') // 导入并使用文章路由模块
+
 
 app.use('/api',userRouter)
 app.use('/my', userinfoRouter)
 app.use('/my/article',artcateRouter)
-
+app.use('/my/article', articleRouter) // 为文章的路由挂载统一的访问前缀 /my/article
 
 // 错误中间件
 app.use(function (err, req, res, next) {
