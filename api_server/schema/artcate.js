@@ -28,3 +28,12 @@ exports.get_cate_schema = {
     id,
   },
 }
+
+// 根据 Id 更新文章分类
+exports.update_cate_schema = {
+  body: {
+    id,
+    name,
+    alias,
+  },
+}
